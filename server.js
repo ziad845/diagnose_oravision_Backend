@@ -3,7 +3,7 @@ import cors from "cors";
 import multer from "multer";
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
@@ -15,7 +15,7 @@ const upload = multer({
 app.get("/", (req, res) => {
   res.json({
     status: "running",
-    message: "Diagnosis Backend Online ",
+    message: "Diagnosis Backend Online",
   });
 });
 
@@ -81,6 +81,7 @@ app.post("/predict-gradcam", upload.single("file"), async (req, res) => {
         body: form,
       },
     );
+
     const data = await response.json();
 
     res.json(data);
@@ -102,5 +103,5 @@ app.use((req, res) => {
 
 /* ================= Start ================= */
 app.listen(PORT, () => {
-  console.log(` Running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
